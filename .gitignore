@@ -1,0 +1,9 @@
+.texpadtmp/
+.ipynb_checkpoints/
+.module_log
+scratch/
+dropbox
+*.egg-info/
+.DS_Store
+*.pyc
+.pytest_cache/
