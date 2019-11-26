@@ -71,23 +71,23 @@ class Discrminator(object):
 
   def __call__(self, x, update_collection=tf.GraphKeys.UPDATE_OPS, **kwargs):
     with tf.variable_scope(self.scope):
-      feat = self.hidden_activation(conv2d(   x,  64, 3, 3, 1, 1, mhe=False, net_type='d',
+      feat = self.hidden_activation(conv2d(   x,  64, 3, 3, 1, 1,
         spectral_normed=True, update_collection=update_collection, stddev=0.02, name='c0_0'))
-      feat = self.hidden_activation(conv2d(feat, 128, 3, 3, 1, 1, mhe=False, net_type='d',
+      feat = self.hidden_activation(conv2d(feat, 128, 3, 3, 1, 1,
         spectral_normed=True, update_collection=update_collection, stddev=0.02, name='c0_1'))
       feat = tf.nn.avg_pool(feat, [1,2,2,1], [1,2,2,1], 'VALID')
 
-      feat = self.hidden_activation(conv2d(feat, 128, 3, 3, 1, 1, mhe=False, net_type='d',
+      feat = self.hidden_activation(conv2d(feat, 128, 3, 3, 1, 1,
         spectral_normed=True, update_collection=update_collection, stddev=0.02, name='c1_0'))
-      feat = self.hidden_activation(conv2d(feat, 256, 3, 3, 1, 1, mhe=False, net_type='d',
+      feat = self.hidden_activation(conv2d(feat, 256, 3, 3, 1, 1,
         spectral_normed=True, update_collection=update_collection, stddev=0.02, name='c1_1'))
       feat = tf.nn.avg_pool(feat, [1,2,2,1], [1,2,2,1], 'VALID')
 
-      feat = self.hidden_activation(conv2d(feat, 256, 3, 3, 1, 1, mhe=False, net_type='d',
+      feat = self.hidden_activation(conv2d(feat, 256, 3, 3, 1, 1,
         spectral_normed=True, update_collection=update_collection, stddev=0.02, name='c3_0'))
       feat = tf.nn.avg_pool(feat, [1,7,7,1], [1,7,7,1], 'VALID')
 
       feat = tf.reshape(feat, [self.batch_size, -1])
-      feat = linear(feat, self.output_dim, mhe=False, net_type='d',
+      feat = linear(feat, self.output_dim,
         spectral_normed=True, update_collection=update_collection, stddev=0.02, name='l4')
     return tf.reshape(feat, [-1])
